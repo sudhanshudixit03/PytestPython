@@ -1,3 +1,5 @@
+import time
+
 from playwright.sync_api import Page
 
 
@@ -35,3 +37,5 @@ def test_login(page: Page):
     page.get_by_placeholder("Password").fill("admin123")
 
     page.get_by_role("button", name="Login").click()
+
+    time.sleep(5)                                               #for increasing running time of test execution
