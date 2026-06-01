@@ -12,7 +12,7 @@ def test_playwrightBasics(playwright):
 
 
 # we can use "page" fixture on the place of above steps , but it always open only "chrome" in "headless"
-def test_playwrightShortcut(page:Page):
+def test_playwrightShortcut(page:Page):             #adding class 'Page' for command suggestion only
     page.goto("https://www.rahulshettyacademy.com")
 
 
