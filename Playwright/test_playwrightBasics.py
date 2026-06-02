@@ -1,6 +1,6 @@
 import time
 
-from playwright.sync_api import Page
+from playwright.sync_api import Page, expect
 
 
 def test_playwrightBasics(playwright):
@@ -17,9 +17,9 @@ def test_playwrightShortcut(page:Page):             #adding class 'Page' for com
 
 
 
-                            #use of "get_by_lable" and "get_by_role"
+                            #use of "get_by_label" and "get_by_role"
 
-
+#login test case-1
 # def test_coreLocators(page:Page):
 #     page.goto("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login")
 #     page.get_by_label("Username").fill(" Admin")
@@ -30,6 +30,7 @@ def test_playwrightShortcut(page:Page):             #adding class 'Page' for com
 #     # # or
 #     # page.get_by_role("button", name="Login").click()
 
+#login test case-2
 def test_login(page: Page):
     page.goto("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login")
 
@@ -39,3 +40,15 @@ def test_login(page: Page):
     page.get_by_role("button", name="Login").click()
 
     time.sleep(5)                                               #for increasing running time of test execution
+
+
+# Invalid login test case
+def test_invalidLogin(page):
+    page.goto("https://www.saucedemo.com")
+    page.get_by_placeholder("Username").fill("standard_user")
+    page.get_by_placeholder("Password").fill("wrong passwrd")
+    page.get_by_role("button", name="Login").click()
+    #Epic sadface: Username and password do not match any user in this service-- assertion
+    expect(page.get_by_text("Epic sadface: Username and password do not match any user in this service")).to_be_visible()
+    # assert "Epic sadface" in page.locator("h3").inner_text()
+
