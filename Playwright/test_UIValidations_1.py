@@ -1,14 +1,15 @@
+
 from playwright.sync_api import Page
 
-def test_UIValidationDynamicScript(page: Page):
-    page.goto("https://rahulshettyacademy.com/logininpagePractise/")
 
-    page.get_by_label("Username:").fill("rahulshettyacademy")
-    page.get_by_label("Password:").fill("learning")
+# Adding items in cart
+def test_validLogin(page:Page):
+    page.goto("https://www.saucedemo.com")
+    page.get_by_placeholder("Username").fill("standard_user")
+    page.get_by_placeholder("Password").fill("secret_sauce")
+    page.get_by_role("button", name="Login").click()
+    page.click("#add-to-cart-sauce-labs-backpack")
+    page.click("#add-to-cart-sauce-labs-bolt-t-shirt")
+    page.click("#shopping_cart_container")
 
-    page.get_by_role("combobox").select_option("teach")
-    page.locator("#okayBtn").click()
-
-    page.locator("#terms").check()
-
-    page.get_by_role("button", name="Sign In").click()
+    assert page.locator(".cart_item").count() == 2
