@@ -17,9 +17,9 @@ def test_playwrightShortcut(page:Page):             #adding class 'Page' for com
 
 
 
-                            #use of "get_by_label" and "get_by_role"
 
-#login test case-1
+
+#login test case-1       #use of "get_by_label" and "get_by_role"
 # def test_coreLocators(page:Page):
 #     page.goto("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login")
 #     page.get_by_label("Username").fill(" Admin")
@@ -30,7 +30,7 @@ def test_playwrightShortcut(page:Page):             #adding class 'Page' for com
 #     # # or
 #     # page.get_by_role("button", name="Login").click()
 
-#login test case-2
+#login test case-2     #use of "get_by_placeholder" and "get_by_role"
 def test_login(page: Page):
     page.goto("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login")
 

@@ -18,3 +18,4 @@ def test_initialCheck(prework):                 # 1st module
 
 def test_secondCheck(prework):                   # 2nd module
     print("This is second test")
+    assert prework == "pass"
