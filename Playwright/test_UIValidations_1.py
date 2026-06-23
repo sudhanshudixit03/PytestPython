@@ -25,7 +25,6 @@ def test_childWindowHandle(page: Page):
         page.locator(".blinkingText").first.click()
 
     childPage = newPage_info.value
-
     text = childPage.locator(".red").text_content()
     print(text)                                                  #Please email us at mentor@rahulshettyacademy.com with below template to receive response
     email = text.split("at")[1].split("with")[0].strip()         #0-> Please email us, 1-> mentor@rahulshettyacademy.com with below template to receive response
