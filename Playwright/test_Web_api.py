@@ -1,5 +1,7 @@
 from playwright.sync_api import Playwright
 
+from utils.apiBase import APIUtils
+
 
 def test_e2e_web_api(playwright:Playwright):
     browser = playwright.chromium.launch(headless=False)
@@ -7,7 +9,8 @@ def test_e2e_web_api(playwright:Playwright):
     page = context.new_page()
 
     #create order -> orderId
-
+    api_utils = APIUtils()
+    api_utils.createOrder(playwright)
 
 
     #login
@@ -16,4 +19,4 @@ def test_e2e_web_api(playwright:Playwright):
     page.fill("#userPassword", "Sud@1234")
     page.click("#login")
 
-    #orders page -> order is present
+    #orders History page -> order is present
