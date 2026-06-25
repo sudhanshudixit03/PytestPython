@@ -1,4 +1,4 @@
-from playwright.sync_api import Playwright
+from playwright.sync_api import Playwright, expect
 
 from utils.apiBase import APIUtils
 
@@ -10,7 +10,7 @@ def test_e2e_web_api(playwright:Playwright):
 
     #create order -> orderId
     api_utils = APIUtils()
-    api_utils.createOrder(playwright)
+    orderId = api_utils.createOrder(playwright)
 
 
     #login
@@ -19,4 +19,10 @@ def test_e2e_web_api(playwright:Playwright):
     page.fill("#userPassword", "Sud@1234")
     page.click("#login")
 
+    page.get_by_role("button", name="ORDERS").click()
+
     #orders History page -> order is present
+    row = page.locator("tr").filter(has_text=orderId)
+    row.get_by_role("button", name="View").click()
+    expect(page.locator(".tagline")).to_have_text("Thank you for Shopping With Us")
+    context.close()

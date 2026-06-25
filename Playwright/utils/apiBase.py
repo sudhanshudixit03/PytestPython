@@ -1,15 +1,14 @@
-from multiprocessing.context import AuthenticationError
+
 
 from playwright.sync_api import Playwright
 ordersPayload = {"orders": [{"country": "India", "productOrderedId": "6960eac0c941646b7a8b3e68"}]}
-loginPayload = {"userEmail":"sudhanshudixit078@gmail.com","userPassword":"Sud@1234"}
 
 
 class APIUtils:
 
     def getToken(self,playwright:Playwright):
         api_request_context = playwright.request.new_context(base_url="https://www.rahulshettyacademy.com")
-        response = api_request_context.post("api/ecom/auth/login",data=loginPayload)
+        response = api_request_context.post("api/ecom/auth/login",data={"userEmail":"sudhanshudixit078@gmail.com","userPassword":"Sud@1234"})
         assert response.ok
         print(response.json())
         responseBody = response.json()
@@ -20,7 +19,13 @@ class APIUtils:
         token = self.getToken(playwright)
         api_request_context = playwright.request.new_context(base_url="https://www.rahulshettyacademy.com")
         response = api_request_context.post("api/ecom/order/create-order",
-                                 data = ordersPayload,headers={"Authentication":token,
+                                 data = ordersPayload,headers={"Authorization":token,
                                                                 "content-type":"application/json"
                                                                 })
         print(response.json())
+
+
+
+        response_body = response.json()
+        orderId = response_body["orders"][0]
+        return orderId
