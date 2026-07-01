@@ -3,6 +3,8 @@ import json
 import pytest
 from playwright.sync_api import Playwright, expect
 
+from pageObject.dashboard import DashboardPage
+from pageObject.login import LoginPage
 from utils.apiBase import APIUtils
 
 # JSON file-> utils->access into test.
@@ -13,6 +15,8 @@ with open('Playwright/data/credentials.json') as f:
 
 @pytest.mark.parametrize('user_credentials' , user_credentials_list)         #it will put one credential from json file and run each time it will use one by one creds
 def test_e2e_web_api(playwright: Playwright, user_credentials):
+    userName = user_credentials["userEmail"]
+    Password = user_credentials["userPassword"]
     browser = playwright.chromium.launch(headless=False)
     context = browser.new_context()
     page = context.new_page()
@@ -22,17 +26,15 @@ def test_e2e_web_api(playwright: Playwright, user_credentials):
     orderId = api_utils.createOrder(playwright,user_credentials)
 
 
-    #login
-    page.goto("https://www.rahulshettyacademy.com/client")
-    page.get_by_placeholder("email@example.com").fill(user_credentials["userEmail"])
-    page.fill("#userPassword",user_credentials["userPassword"])
-    page.click("#login")
 
-    page.get_by_role("button", name="ORDERS").click()
+    loginPage = LoginPage(page) #object for LoginPage class
+    loginPage.navigate()
+    dashboardPage = loginPage.login(userName, Password)
 
-    #orders History page -> order is present
-    row = page.locator("tr").filter(has_text=orderId)
-    row.get_by_role("button", name="View").click()
-    expect(page.locator(".tagline")).to_have_text("Thank you for Shopping With Us")
+
+    orderHistoryPage = dashboardPage.selectOrdersNavLink()
+    orderDetailsPage = orderHistoryPage.selectOrder(orderId)
+    orderDetailsPage.verifyOrderMessage()
+
+
     context.close()
-
