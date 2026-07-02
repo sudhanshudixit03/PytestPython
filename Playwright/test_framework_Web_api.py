@@ -8,7 +8,7 @@ from pageObject.login import LoginPage
 from utils.apiBase import APIUtils
 
 # JSON file-> utils->access into test.
-with open('Playwright/data/credentials.json') as f:
+with open('Playwright/data/credentials.json') as f:                 #f is the variable that store the data from json file
     test_data = json.load(f)
     print(test_data)
     user_credentials_list = test_data["user_credentials"]

@@ -3,7 +3,7 @@ from .dashboard import DashboardPage
 
 class LoginPage:
 
-    def __init__(self,page):
+    def __init__(self,page):                         #for using extra objects in the class we use constructor
         self.page = page
 
     def navigate(self):
