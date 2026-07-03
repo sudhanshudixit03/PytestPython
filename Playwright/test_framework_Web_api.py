@@ -2,6 +2,7 @@ import json
 
 import pytest
 from playwright.sync_api import Playwright, expect
+from pytest_playwright.pytest_playwright import page, context
 
 from pageObject.dashboard import DashboardPage
 from pageObject.login import LoginPage
@@ -17,9 +18,7 @@ with open('Playwright/data/credentials.json') as f:                 #f is the va
 def test_e2e_web_api(playwright: Playwright, user_credentials):
     userName = user_credentials["userEmail"]
     Password = user_credentials["userPassword"]
-    browser = playwright.chromium.launch(headless=False)
-    context = browser.new_context()
-    page = context.new_page()
+
 
     #create order -> orderId
     api_utils = APIUtils()
