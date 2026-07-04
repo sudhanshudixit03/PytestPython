@@ -6,7 +6,7 @@ from pytest_playwright.pytest_playwright import page, context
 
 from pageObject.dashboard import DashboardPage
 from pageObject.login import LoginPage
-from utils.apiBase import APIUtils
+from utils.apiBaseFramework import APIUtils
 
 # JSON file-> utils->access into test.
 with open('Playwright/data/credentials.json') as f:                 #f is the variable that store the data from json file
@@ -15,7 +15,7 @@ with open('Playwright/data/credentials.json') as f:                 #f is the va
     user_credentials_list = test_data["user_credentials"]
 
 @pytest.mark.parametrize('user_credentials' , user_credentials_list)         #it will put one credential from json file and run each time it will use one by one creds
-def test_e2e_web_api(playwright: Playwright, user_credentials):
+def test_e2e_web_api(playwright: Playwright, browserInstance, user_credentials):
     userName = user_credentials["userEmail"]
     Password = user_credentials["userPassword"]
 
@@ -26,7 +26,7 @@ def test_e2e_web_api(playwright: Playwright, user_credentials):
 
 
 
-    loginPage = LoginPage(page) #object for LoginPage class
+    loginPage = LoginPage(browserInstance) #object for LoginPage class
     loginPage.navigate()
     dashboardPage = loginPage.login(userName, Password)
 
@@ -36,4 +36,3 @@ def test_e2e_web_api(playwright: Playwright, user_credentials):
     orderDetailsPage.verifyOrderMessage()
 
 
-    context.close()
