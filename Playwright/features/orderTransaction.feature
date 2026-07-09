@@ -2,6 +2,7 @@ Feature: Order Transaction
     test related to order transactions
 
 
+#for sending some data into scenario like username and password we should use 'scenario Outline'
 
   Scenario Outline: Verify order success message shown in details page
     Given place the item order with <username> and <password>
